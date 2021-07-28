@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/video")
 public class VideoController {
@@ -14,7 +16,7 @@ public class VideoController {
     VideoService videoService;
 
     @PostMapping
-    public ResponseEntity<Video> createVideo(@RequestBody Video video ) {
+    public ResponseEntity<Video> createVideo(@Valid  @RequestBody Video video )   {
         return videoService.create(video);
     }
 

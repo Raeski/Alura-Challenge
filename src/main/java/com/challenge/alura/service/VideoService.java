@@ -13,9 +13,11 @@ public class VideoService {
     @Autowired
     private VideoRepository videoRepository;
 
-    public ResponseEntity<Video> create(Video video) {
-        videoRepository.save(video);
-        return new ResponseEntity(video, HttpStatus.CREATED );
+    public ResponseEntity<Video> create(Video video)   {
+
+            videoRepository.save(video);
+            return new ResponseEntity(video, HttpStatus.CREATED );
+
     }
 
 
