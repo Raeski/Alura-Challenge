@@ -1,4 +1,4 @@
-package com.challenge.alura.Alura;
+package com.challenge.alura;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
