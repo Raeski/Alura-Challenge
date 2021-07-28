@@ -16,9 +16,18 @@ public class VideoController {
     VideoService videoService;
 
     @PostMapping
-    public ResponseEntity<Video> createVideo(@Valid  @RequestBody Video video )   {
+    private ResponseEntity<Video> createVideo(@Valid  @RequestBody Video video )   {
         return videoService.create(video);
     }
 
+    @GetMapping
+    private ResponseEntity<Video> searchVideos() {
+        return videoService.getVideos();
+    }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<Video> searchVideo(@PathVariable Long id) {
+        return videoService.getVideo(id);
+    }
 
 }
