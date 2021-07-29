@@ -3,17 +3,14 @@ package com.challenge.alura.model;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Video {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotBlank(message = "Titulo é obrigatório")
@@ -25,6 +22,9 @@ public class Video {
     @NotBlank(message = "Url é obrigatório")
     @Length(min = 10)
     private String url;
+
+    @ManyToOne
+    private Category idCategory;
 
 
     public Long getId() {
