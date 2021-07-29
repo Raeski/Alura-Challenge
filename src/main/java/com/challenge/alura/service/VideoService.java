@@ -61,16 +61,22 @@ public class VideoService {
 
         try {
             Optional<Video> video1 = videoRepository.findById(id);
-            Video video = new Video();
+            if(!video1.isEmpty()) {
+                delete(video1.get().getId());
+                Video video = new Video();
 
-            video.setUrl(videoUpdate.getUrl());
-            video.setTitulo(videoUpdate.getTitulo());
-            video.setDescricao(videoUpdate.getDescricao());
-            video.setId(id);
+                video.setUrl(videoUpdate.getUrl());
+                video.setTitulo(videoUpdate.getTitulo());
+                video.setDescricao(videoUpdate.getDescricao());
+                video.setId(id);
 
-            videoRepository.save(video);
+                videoRepository.save(video);
+                return new ResponseEntity(video, HttpStatus.valueOf(200));
 
-            return new ResponseEntity(video, HttpStatus.valueOf(200));
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
         } catch (BadRequestException ex) {
             throw new BadRequestException("Fail to update video!", ex.getMessage());
         }
