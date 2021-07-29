@@ -19,47 +19,61 @@ public class VideoService {
     private VideoRepository videoRepository;
 
     public ResponseEntity<Video> create(Video video)   {
-        videoRepository.save(video);
-        return new ResponseEntity(video, HttpStatus.CREATED );
+
+        try {
+            videoRepository.save(video);
+            return new ResponseEntity(video, HttpStatus.CREATED );
+        } catch (BadRequestException ex) {
+            throw new BadRequestException("Fail to create video");
+        }
+
     }
 
     public ResponseEntity<Video> getVideos() {
-        List<Video> all = videoRepository.findAll();
-        return new ResponseEntity(all,HttpStatus.valueOf(200));
+
+        try {
+            List<Video> all = videoRepository.findAll();
+            return new ResponseEntity(all,HttpStatus.valueOf(200));
+        } catch (BadRequestException ex) {
+            throw new BadRequestException("Fail to get videos", ex.getMessage());
+        }
+
     }
 
 
-    public Video getVideoById(Long id) throws Exception {
+    public Video getVideoById(Long id){
         return videoRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Video not found!"));
 
     }
 
-    public String delete(Long id) throws Exception {
+    public String delete(Long id) {
         Video video = getVideoById(id);
         try {
             videoRepository.deleteById(video.getId());
-            return "Video deletado";
-        } catch (Exception e) {
-            e.printStackTrace();
+            return "Sucessful, video delete!";
+        } catch (BadRequestException e) {
+            throw new BadRequestException("Fail to delete video", e.getMessage());
         }
-        return "";
     }
 
-    public ResponseEntity<Video> update(VideoUpdate videoUpdate, Long id) throws Exception {
+    public ResponseEntity<Video> update(VideoUpdate videoUpdate, Long id) {
 
-        Optional<Video> video1 = videoRepository.findById(id);
-        Video video = new Video();
+        try {
+            Optional<Video> video1 = videoRepository.findById(id);
+            Video video = new Video();
 
-        video.setUrl(videoUpdate.getUrl());
-        video.setTitulo(videoUpdate.getTitulo());
-        video.setDescricao(videoUpdate.getDescricao());
-        video.setId(id);
+            video.setUrl(videoUpdate.getUrl());
+            video.setTitulo(videoUpdate.getTitulo());
+            video.setDescricao(videoUpdate.getDescricao());
+            video.setId(id);
 
-        videoRepository.save(video);
+            videoRepository.save(video);
 
-        return new ResponseEntity(video, HttpStatus.valueOf(200));
-
+            return new ResponseEntity(video, HttpStatus.valueOf(200));
+        } catch (BadRequestException ex) {
+            throw new BadRequestException("Fail to update video!", ex.getMessage());
+        }
 
     }
 }
