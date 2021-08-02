@@ -22,5 +22,12 @@ public class CategoryService {
         }
     }
 
+    public ResponseEntity<Category> getCategoryById ( Long id ) {
+        try{
+            return new ResponseEntity<>(categoryRepository.getById(id), HttpStatus.ACCEPTED);
+        } catch (BadRequestException e) {
+            throw new BadRequestException("Fail to get category", e.getMessage());
+        }
+    }
 
 }
