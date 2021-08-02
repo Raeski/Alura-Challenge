@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -29,6 +31,12 @@ public class CategoryController {
     private void deleleteVideoById(@PathVariable Long id ) {
         categoryService.deleteVideo(id);
     }
+
+    @GetMapping()
+    private List<Category> listAllCategory() {
+        return categoryService.categoryList();
+    }
+
 
 
 
