@@ -21,9 +21,15 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+    private Category getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }
+
+    @DeleteMapping("delete/{id}")
+    private void deleleteVideoById(@PathVariable Long id ) {
+        categoryService.deleteVideo(id);
+    }
+
 
 
 }

@@ -22,11 +22,19 @@ public class CategoryService {
         }
     }
 
-    public ResponseEntity<Category> getCategoryById ( Long id ) {
-        try{
-            return new ResponseEntity<>(categoryRepository.getById(id), HttpStatus.ACCEPTED);
-        } catch (BadRequestException e) {
-            throw new BadRequestException("Fail to get category", e.getMessage());
+    public Category getCategoryById ( Long id ) {
+
+        return categoryRepository.findById(id).orElseThrow(() -> new BadRequestException("Fail to find category"));
+    }
+
+
+    public void deleteVideo ( Long id ) {
+
+        Category category = getCategoryById(id);
+        try {
+            categoryRepository.deleteById(category.getId());
+        } catch (BadRequestException exception) {
+            exception.getMessage();
         }
     }
 
