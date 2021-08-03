@@ -2,6 +2,9 @@ package com.challenge.alura.service;
 
 import com.challenge.alura.exception.BadRequestException;
 import com.challenge.alura.model.Category;
+import com.challenge.alura.model.CategoryUpdate;
+import com.challenge.alura.model.Video;
+import com.challenge.alura.model.VideoUpdate;
 import com.challenge.alura.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -42,6 +46,31 @@ public class CategoryService {
 
     public List<Category> categoryList () {
         return categoryRepository.findAll();
+    }
+
+    public ResponseEntity<Category> update(CategoryUpdate categoryUpdate, Long id) {
+
+        try {
+            Optional<Category> category1 = categoryRepository.findById(id);
+            if(!category1.isEmpty()) {
+                deleteVideo(category1.get().getId());
+                Category category = new Category();
+
+                category.setCor(categoryUpdate.getCor());
+                category.setTitulo(categoryUpdate.getTitulo());
+                category.setId(id);
+
+                categoryRepository.save(category);
+                return new ResponseEntity(category, HttpStatus.valueOf(200));
+
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+        } catch (BadRequestException ex) {
+            throw new BadRequestException("Fail to update video!", ex.getMessage());
+        }
+
     }
 
 }
