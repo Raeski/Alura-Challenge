@@ -1,5 +1,6 @@
 package com.challenge.alura.controller;
 
+import com.challenge.alura.model.Category;
 import com.challenge.alura.model.Video;
 import com.challenge.alura.model.VideoUpdate;
 import com.challenge.alura.service.VideoService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,7 +26,7 @@ public class VideoController {
     }
 
     @GetMapping
-    private ResponseEntity<Video> searchVideos() {
+    private ResponseEntity<List<Video>> searchVideos() {
         return videoService.getVideos();
     }
 
@@ -41,6 +43,11 @@ public class VideoController {
     @PutMapping("/{id}")
     private ResponseEntity<Video> updateVideo(@PathVariable Long id, @RequestBody VideoUpdate videoUpdate){
         return videoService.update(videoUpdate, id);
+    }
+
+    @GetMapping("/category/{id}")
+    private List<Video> getVideoByCategory(@RequestBody Category id) {
+        return videoService.getVideoByCategory(id);
     }
 
 }

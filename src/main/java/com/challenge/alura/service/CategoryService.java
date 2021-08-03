@@ -20,6 +20,9 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    VideoService videoService;
+
     public ResponseEntity<Category> saveCategory ( Category category) {
         try{
             return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.CREATED);
@@ -70,7 +73,8 @@ public class CategoryService {
         } catch (BadRequestException ex) {
             throw new BadRequestException("Fail to update video!", ex.getMessage());
         }
-
     }
+
+
 
 }

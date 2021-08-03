@@ -37,7 +37,7 @@ public class VideoService {
 
     }
 
-    public ResponseEntity<Video> getVideos() {
+    public ResponseEntity<List<Video>> getVideos() {
 
         try {
             List<Video> all = videoRepository.findAll();
@@ -88,6 +88,12 @@ public class VideoService {
         } catch (BadRequestException ex) {
             throw new BadRequestException("Fail to update video!", ex.getMessage());
         }
+
+    }
+
+    public List<Video> getVideoByCategory( Category id ) {
+
+        return videoRepository.findVideoByCategory(id);
 
     }
 }
