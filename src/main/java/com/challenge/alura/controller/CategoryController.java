@@ -37,7 +37,4 @@ public class CategoryController {
         return categoryService.categoryList();
     }
 
-
-
-
 }

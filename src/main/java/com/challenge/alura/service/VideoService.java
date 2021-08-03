@@ -1,6 +1,7 @@
 package com.challenge.alura.service;
 
 import com.challenge.alura.exception.BadRequestException;
+import com.challenge.alura.model.Category;
 import com.challenge.alura.model.Video;
 import com.challenge.alura.model.VideoUpdate;
 import com.challenge.alura.repository.VideoRepository;
@@ -18,9 +19,16 @@ public class VideoService {
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
+
     public ResponseEntity<Video> create(Video video)   {
 
+        Category categoryById = categoryService.getCategoryById(video.getCategory().getId());
         try {
+            video.setCategory(categoryById);
+
             videoRepository.save(video);
             return new ResponseEntity(video, HttpStatus.CREATED );
         } catch (BadRequestException ex) {

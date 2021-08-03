@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class Video {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @NotBlank(message = "Titulo é obrigatório")
@@ -24,8 +24,7 @@ public class Video {
     private String url;
 
     @ManyToOne
-    private Category idCategory;
-
+    private Category category;
 
     public Long getId() {
         return id;
@@ -57,5 +56,13 @@ public class Video {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
