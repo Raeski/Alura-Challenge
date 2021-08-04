@@ -50,4 +50,9 @@ public class VideoController {
         return videoService.getVideoByCategory(id);
     }
 
+    @GetMapping("/search")
+    private ResponseEntity<List<Video>> getVideoByName(@RequestParam String titulo) {
+        return videoService.getVideoByName(titulo);
+    }
+
 }

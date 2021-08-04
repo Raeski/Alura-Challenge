@@ -14,4 +14,5 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
     List<Video> findVideoByCategory(@Param("category") Category category);
 
 
+    List<Video> findByTitulo(String titulo);
 }

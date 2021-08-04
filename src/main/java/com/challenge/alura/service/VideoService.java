@@ -96,4 +96,9 @@ public class VideoService {
         return videoRepository.findVideoByCategory(id);
 
     }
+
+    public ResponseEntity<List<Video>> getVideoByName(String titulo) {
+
+        return new ResponseEntity(videoRepository.findByTitulo(titulo),HttpStatus.ACCEPTED);
+    }
 }
