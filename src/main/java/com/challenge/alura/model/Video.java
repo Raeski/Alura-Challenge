@@ -23,7 +23,7 @@ public class Video {
     @Length(min = 10)
     private String url;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     private Category category;
 
     public Long getId() {
