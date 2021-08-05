@@ -19,7 +19,6 @@ class CategoryRepositoryTest {
 
     @Test
     @DisplayName("Save create category when Successful")
-    @AutoConfigureTestDatabase
     void save_PersistCategory_WhenSuccessful(){
         Category categoryToBeSaved = createCategory();
         Category savedCategory = this.categoryRepository.save(categoryToBeSaved);
@@ -28,12 +27,28 @@ class CategoryRepositoryTest {
         Assertions.assertThat(savedCategory.getTitulo()).isEqualTo(categoryToBeSaved.getTitulo());
     }
 
+    @Test
+    @DisplayName("Save update category when Successful")
+    void save_UpdateCategory_WhenSuccessful() {
+        Category categoryToBeSaved = createCategory();
+        Category savedCategory = this.categoryRepository.save(categoryToBeSaved);
+
+        savedCategory.setCor("Vermelho");
+
+        Category categoryUpdate = this.categoryRepository.save(savedCategory);
+        Assertions.assertThat(categoryUpdate).isNotNull();
+        Assertions.assertThat(categoryUpdate.getCor().equals(savedCategory.getCor()));
+
+
+    }
+
     private Category createCategory(){
         Category createCategory = new Category() ;
         createCategory.setTitulo("Titulo categoria");
         createCategory.setCor("Preto");
         return createCategory;
     }
+
 
 
 }
