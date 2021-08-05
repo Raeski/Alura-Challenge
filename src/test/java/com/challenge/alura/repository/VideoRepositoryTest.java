@@ -100,11 +100,6 @@ class VideoRepositoryTest {
 
     }
 
-
-
-
-
-
     private Video createVideo(){
         Video createVideo = new Video();
         createVideo.setDescricao("Descrição de teste");
