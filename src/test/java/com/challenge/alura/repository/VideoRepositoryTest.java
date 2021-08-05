@@ -12,6 +12,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.swing.text.html.Option;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -50,6 +54,22 @@ class VideoRepositoryTest {
         Assertions.assertThat(updateVideo.getTitulo()).isEqualTo(savedVideo.getTitulo());
     }
 
+    @Test
+    @DisplayName("Delete removes video when Successful")
+    void delete_RemovesVideo_WhenSuccessful(){
+        Video videoToBeSaved = createVideo();
+
+        Video videoSaved = this.videoRepository.save(videoToBeSaved);
+
+        this.videoRepository.delete(videoSaved);
+
+        Optional<Video> videoOptional = this.videoRepository.findById(videoSaved.getId());
+
+        Assertions.assertThat(videoOptional.isEmpty()).isTrue();
+    }
+
+
+
     private Video createVideo(){
         Video createVideo = new Video();
         createVideo.setDescricao("Descrição de teste");
@@ -57,8 +77,9 @@ class VideoRepositoryTest {
         createVideo.setTitulo("Titulo de teste");
         createVideo.setCategory(new Category());
         return createVideo;
-
     }
+
+
 
 
 
