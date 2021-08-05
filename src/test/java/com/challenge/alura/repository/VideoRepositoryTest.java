@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.swing.text.html.Option;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,6 +68,40 @@ class VideoRepositoryTest {
 
         Assertions.assertThat(videoOptional.isEmpty()).isTrue();
     }
+
+    @Test
+    @DisplayName("Find by category video when Successful")
+    void findByCategory_ReturnVideo_WhenSuccessful() {
+        Video videoToBeSaved = createVideo();
+
+        Video videoSaved = this.videoRepository.save(videoToBeSaved);
+
+        Category category = videoSaved.getCategory();
+
+        List<Video> videos = this.videoRepository.findVideoByCategory(category);
+
+        Assertions.assertThat(videos).isNotEmpty();
+
+    }
+
+    @Test
+    @DisplayName("Find by titulo returns list of video when Successful")
+    void findByTitulo_ReturnVideo_WhenSuccessful() {
+        Video videoToBeSaved = createVideo();
+
+        Video videoSaved = this.videoRepository.save(videoToBeSaved);
+
+        String titulo = videoSaved.getTitulo();
+
+        List<Video> videos = this.videoRepository.findByTitulo(titulo);
+
+        Assertions.assertThat(videos).isNotEmpty();
+        Assertions.assertThat(videos.get(0).getTitulo().equals(titulo));
+
+    }
+
+
+
 
 
 
